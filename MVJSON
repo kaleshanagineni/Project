@@ -1,0 +1,37 @@
+import requests
+from bs4 import BeautifulSoup
+import json
+def pulldata(url,name):
+    filename=name+'.json';
+    #print(filename)
+    #print(url)
+    
+    r=requests.get(url)
+    soup= BeautifulSoup(r.content)
+#print(soup)
+    mv=soup.find("p").get_text()
+#print(mv)
+    with open('MV/'+filename, 'w') as f:
+        
+        f.write(mv)
+
+def run():
+    
+    import datetime
+    import time
+    url='https://m.steamshipauthority.com/schedule/MV/'
+    date = datetime.date(2014,8,24)
+    for i in range(366):
+        
+        date += datetime.timedelta(days=1)
+        pulldata(url+str(date),str(date))
+        time.sleep( 3 )
+    #print(date) 
+    
+    
+    
+    
+        
+        
+if __name__ == '__main__':
+    run()
